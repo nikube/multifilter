@@ -1,0 +1,15 @@
+# Copyright (C) 2026 Anatole Conseil
+Module185172Name=MultiFilter
+Module185172Desc=Multiselect and "Not defined" search filters on lists
+MultifilterSetup=MultiFilter setup
+MultifilterSetupIntro=On list pages, the targeted single-choice filters become multiselects with a "Not defined" entry: search several payment terms, payment modes or extrafield values at once, and find the records with no value set. No core file is modified.
+MultifilterFeaturePayment=Payment modes and payment terms (customer invoices, orders, proposals, supplier invoices)
+MultifilterFeatureExtrafields=Extrafields of type list (sellist) and select, on all lists
+MultifilterFeatureNotDefined=Add the "Not defined" entry (records with no value)
+MultifilterFeatureDebug=Traces in the browser console and in the Dolibarr syslog
+MultifilterNotDefined=Not defined
+MultifilterCoveredLists=Covered lists
+MultifilterCoveredFields=Transformed filters
+MultifilterAllLists=All lists with extrafields
+MultifilterExtrafieldsTypes=Extrafields of type "List from a table" (sellist) and "Select" (select)
+MultifilterHint=Selected values are kept through pagination, sorting, exports and the "restore last search" feature. The original filter stays in place but hidden: disabling the module gives the lists back untouched.

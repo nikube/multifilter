@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "module_id": "multifilter",
+  "name": "MultiFilter",
+  "description": "Multiselect and \"Not defined\" search filters on list pages (payment terms, payment modes, sellist/select extrafields). No core modification.",
+  "author": "Anatole Conseil",
+  "url": "https://github.com/nikube/multifilter",
+  "license": "GPL-3.0-or-later",
+  "dolibarr_module_id": 185172,
+  "branch": "master",
+  "compatibility": {
+    "0.x": {
+      "dolibarr_min": "19.0.0",
+      "dolibarr_max": "24.*",
+      "php_min": "7.4"
+    }
+  },
+  "dependencies": {
+    "modules": [],
+    "php_extensions": []
+  }
+}

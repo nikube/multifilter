@@ -1,0 +1,15 @@
+# Copyright (C) 2026 Anatole Conseil
+Module185172Name=MultiFilter
+Module185172Desc=Filtres multi-choix et « Non défini » sur les listes
+MultifilterSetup=Configuration de MultiFilter
+MultifilterSetupIntro=Dans les listes, les filtres à choix unique ciblés deviennent des listes à choix multiples avec une entrée « Non défini » : on peut chercher plusieurs conditions de paiement, plusieurs modes de règlement ou plusieurs valeurs d'un extrafield à la fois, et retrouver les enregistrements sans valeur. Aucun fichier du cœur n'est modifié.
+MultifilterFeaturePayment=Modes de règlement et conditions de paiement (factures, commandes, devis, factures fournisseurs)
+MultifilterFeatureExtrafields=Extrafields de type liste (sellist) et sélection (select), toutes les listes
+MultifilterFeatureNotDefined=Ajouter l'entrée « Non défini » (enregistrements sans valeur)
+MultifilterFeatureDebug=Traces dans la console du navigateur et dans le syslog Dolibarr
+MultifilterNotDefined=Non défini
+MultifilterCoveredLists=Listes couvertes
+MultifilterCoveredFields=Filtres transformés
+MultifilterAllLists=Toutes les listes avec extrafields
+MultifilterExtrafieldsTypes=Extrafields de type « Liste depuis une table » (sellist) et « Sélection » (select)
+MultifilterHint=Les valeurs choisies sont conservées dans la pagination, le tri, les exports et le rappel de la dernière recherche. Le filtre d'origine reste en place mais est masqué : le désactiver du module rend les listes telles quelles.
