@@ -1,0 +1,16 @@
+# Copyright (C) 2026 Anatole Conseil
+Module185172Name=MultiFilter
+Module185172Desc=Meervoudige selectie en "Niet gedefinieerd" zoekfilters in lijsten
+MultifilterSetup=MultiFilter instellingen
+MultifilterSetupIntro=In de lijsten worden de betrokken enkelvoudige filters omgezet in meervoudige keuzelijsten met een optie "Niet gedefinieerd": zoek tegelijk op meerdere betalingsvoorwaarden, betaalwijzen of waarden van een extra veld, en vind de records zonder waarde. Er wordt geen kernbestand gewijzigd.
+MultifilterFeaturePayment=Betaalwijzen en betalingsvoorwaarden (klantfacturen, orders, offertes, leveranciersfacturen)
+MultifilterFeatureExtrafields=Extra velden van het type lijst (sellist) en selectie (select), in alle lijsten
+MultifilterFeatureNotDefined=Optie "Niet gedefinieerd" toevoegen (records zonder waarde)
+MultifilterFeatureDebug=Logberichten in de browserconsole en in de Dolibarr-syslog
+MultifilterNotDefined=Niet gedefinieerd
+MultifilterCoveredLists=Ondersteunde lijsten
+MultifilterCoveredFields=Omgezette filters
+MultifilterExtrafieldsLists=Kernlijsten met extra velden (%s bekende contexten)
+MultifilterExtraContexts=Extra hook-contexten (lijsten van modules van derden die de extra velden koppelen met de alias "ef"), gescheiden door komma's
+MultifilterExtrafieldsTypes=Extra velden van het type "Lijst uit een tabel" (sellist) en "Selectie" (select)
+MultifilterHint=De gekozen waarden blijven behouden bij paginering, sorteren, exporteren en het herstellen van de laatste zoekopdracht. Het oorspronkelijke filter blijft aanwezig maar verborgen: na het uitschakelen van de module zijn de lijsten weer ongewijzigd.

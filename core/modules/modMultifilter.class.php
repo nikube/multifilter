@@ -46,7 +46,7 @@ class modMultifilter extends DolibarrModules
 		$this->descriptionlong = "Search several payment terms, payment modes or extrafield values at once on list pages, and find the records where the value is not set. No core modification.";
 		$this->editor_name = 'Anatole Conseil';
 		$this->editor_url = '';
-		$this->version = '0.1.1';
+		$this->version = '0.1.2';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 		$this->picto = 'fa-filter';
 

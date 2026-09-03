@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 0.1.2 (2026-09-03)
+
+- Translations: Spanish, German, Italian, Dutch, Portuguese.
+- DoliStore assets (cover, manifest).
+
 ## 0.1.1 (2026-09-03)
 
 - Extrafield filters restricted to a whitelist of list contexts that join extrafields with the `ef` alias (no more risk of "Unknown column ef.xxx" on pages like reassortlot, tasks time or surveys); new option MULTIFILTER_EXTRAFIELDS_CONTEXTS to add third-party lists.

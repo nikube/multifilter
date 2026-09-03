@@ -1,0 +1,16 @@
+# Copyright (C) 2026 Anatole Conseil
+Module185172Name=MultiFilter
+Module185172Desc=Mehrfachauswahl- und "Nicht definiert"-Suchfilter in Listen
+MultifilterSetup=MultiFilter-Einstellungen
+MultifilterSetupIntro=In den Listen werden die betroffenen Einfachauswahl-Filter zu Mehrfachauswahl-Listen mit einem Eintrag "Nicht definiert": Suchen Sie gleichzeitig nach mehreren Zahlungsbedingungen, Zahlungsarten oder Werten eines Zusatzfelds und finden Sie Datensätze ohne Wert. Keine Kerndatei wird verändert.
+MultifilterFeaturePayment=Zahlungsarten und Zahlungsbedingungen (Kundenrechnungen, Aufträge, Angebote, Lieferantenrechnungen)
+MultifilterFeatureExtrafields=Zusatzfelder vom Typ Liste (sellist) und Auswahl (select), in allen Listen
+MultifilterFeatureNotDefined=Eintrag "Nicht definiert" hinzufügen (Datensätze ohne Wert)
+MultifilterFeatureDebug=Protokolle in der Browserkonsole und im Dolibarr-Syslog
+MultifilterNotDefined=Nicht definiert
+MultifilterCoveredLists=Abgedeckte Listen
+MultifilterCoveredFields=Umgewandelte Filter
+MultifilterExtrafieldsLists=Kernlisten mit Zusatzfeldern (%s bekannte Kontexte)
+MultifilterExtraContexts=Zusätzliche Hook-Kontexte (Listen von Drittmodulen, die die Zusatzfelder mit dem Alias "ef" verknüpfen), durch Kommas getrennt
+MultifilterExtrafieldsTypes=Zusatzfelder vom Typ "Liste aus einer Tabelle" (sellist) und "Auswahl" (select)
+MultifilterHint=Die gewählten Werte bleiben bei Seitenwechsel, Sortierung, Export und beim Wiederherstellen der letzten Suche erhalten. Der ursprüngliche Filter bleibt vorhanden, aber ausgeblendet: nach Deaktivierung des Moduls sind die Listen wieder unverändert.

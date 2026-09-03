@@ -1,0 +1,143 @@
+product_id:
+
+name: MultiFilter
+slug: multifilter
+module_dir: "."
+
+doli_min: V19
+doli_max: V23
+php_min: "7.4"
+
+price: "19"
+contact: nz@anatoleconseil.com
+categories: [interface-utilisateurs, outils-systemes]
+keywords: "filtre, filter, multiselect, multi-select, liste, list, extrafield, conditions de paiement, mode de règlement, payment terms, payment mode, non défini, not defined, search"
+validity_days: 730
+
+descriptions:
+  en:
+    short: >-
+      Multiselect search filters on list pages: pick several payment terms,
+      payment modes or extrafield values at once, and find the records where
+      the value is not set. No core file modified.
+    long: |
+      <h2>MultiFilter</h2>
+      <p>On Dolibarr lists, the payment mode, payment term and extrafield
+      filters only accept <b>one</b> value. You want the invoices paid by
+      transfer <i>or</i> by check? The orders with no payment term at all?
+      You have to run several searches, or export everything. MultiFilter
+      turns these filters into <b>multiselects</b> with a <b>"Not defined"</b>
+      entry, right in the search row of the list.</p>
+
+      <h3>What you get</h3>
+      <ul>
+        <li><b>Payment modes and payment terms</b> &mdash; multiselect filters
+        on customer invoices, customer orders, proposals and supplier
+        invoices lists.</li>
+        <li><b>Extrafields</b> &mdash; every extrafield of type "List from a
+        table" (sellist) or "Select" gets a multiselect filter on the core
+        lists (third parties, contacts, products, projects, tasks, tickets,
+        contracts, shipments, members, users&hellip; 58 lists).</li>
+        <li><b>"Not defined"</b> &mdash; one click to list the records where
+        the field is empty, alone or combined with other values.</li>
+        <li>The selection is kept through <b>pagination, sorting, exports,
+        mass actions</b> and the "restore last search" feature when you come
+        back from a card.</li>
+      </ul>
+
+      <h3>Designed for Dolibarr</h3>
+      <ul>
+        <li><b>No core file modified</b>: the standard filter stays in place
+        (hidden), the module adds its own criteria through the standard hooks.
+        Disable the module and your lists are exactly as before.</li>
+        <li>Uses the same Select2 multiselect widget as Dolibarr itself.</li>
+        <li>Safe: values are validated server-side, filters are only applied
+        on the lists known to support them, third-party lists can be added from
+        the setup page.</li>
+      </ul>
+
+      <h3>Configuration</h3>
+      <ul>
+        <li>Payment fields: on/off</li>
+        <li>Extrafields: on/off</li>
+        <li>"Not defined" entry: on/off</li>
+        <li>Extra list contexts for third-party modules</li>
+        <li>Debug traces</li>
+      </ul>
+
+      <h3>Requirements</h3>
+      <ul>
+        <li>Dolibarr 19.0 or higher (tested up to V23)</li>
+        <li>PHP 7.4 or higher, JavaScript enabled</li>
+      </ul>
+
+      <h3>Languages</h3>
+      <p>English, French, Spanish, German, Italian, Dutch, Portuguese.</p>
+
+      <h3>License</h3>
+      <p>GPL v3 or later. Source code included.</p>
+
+  fr:
+    short: >-
+      Filtres multi-choix dans les listes : plusieurs conditions de paiement,
+      modes de règlement ou valeurs d'extrafield à la fois, et retrouvez les
+      enregistrements sans valeur. Aucun fichier du cœur modifié.
+    long: |
+      <h2>MultiFilter</h2>
+      <p>Dans les listes Dolibarr, les filtres mode de règlement, conditions
+      de paiement et extrafields n'acceptent qu'<b>une seule</b> valeur. Vous
+      voulez les factures payées par virement <i>ou</i> par chèque ? Les
+      commandes sans aucune condition de paiement ? Il faut enchaîner les
+      recherches, ou tout exporter. MultiFilter transforme ces filtres en
+      <b>listes à choix multiples</b> avec une entrée <b>« Non défini »</b>,
+      directement dans la ligne de recherche de la liste.</p>
+
+      <h3>Ce que vous obtenez</h3>
+      <ul>
+        <li><b>Modes de règlement et conditions de paiement</b> &mdash; filtres
+        multi-choix sur les listes de factures clients, commandes clients,
+        devis et factures fournisseurs.</li>
+        <li><b>Extrafields</b> &mdash; chaque extrafield de type « Liste depuis
+        une table » (sellist) ou « Sélection » reçoit un filtre multi-choix sur
+        les listes du cœur (tiers, contacts, produits, projets, tâches,
+        tickets, contrats, expéditions, adhérents, utilisateurs&hellip;
+        58 listes).</li>
+        <li><b>« Non défini »</b> &mdash; un clic pour lister les enregistrements
+        dont le champ est vide, seul ou combiné à d'autres valeurs.</li>
+        <li>La sélection est conservée dans la <b>pagination, le tri, les
+        exports, les actions de masse</b> et le rappel de la dernière
+        recherche au retour d'une fiche.</li>
+      </ul>
+
+      <h3>Pensé pour Dolibarr</h3>
+      <ul>
+        <li><b>Aucun fichier du cœur modifié</b> : le filtre standard reste en
+        place (masqué), le module ajoute ses propres critères par les hooks
+        standards. Désactivez le module et vos listes sont exactement comme
+        avant.</li>
+        <li>Utilise le composant Select2 multi-choix de Dolibarr lui-même.</li>
+        <li>Sûr : valeurs validées côté serveur, filtres appliqués uniquement
+        sur les listes connues pour les supporter, listes de modules tiers
+        ajoutables depuis la page de configuration.</li>
+      </ul>
+
+      <h3>Configuration</h3>
+      <ul>
+        <li>Champs paiement : oui/non</li>
+        <li>Extrafields : oui/non</li>
+        <li>Entrée « Non défini » : oui/non</li>
+        <li>Contextes de listes supplémentaires pour les modules tiers</li>
+        <li>Traces de debug</li>
+      </ul>
+
+      <h3>Prérequis</h3>
+      <ul>
+        <li>Dolibarr 19.0 ou supérieur (testé jusqu'à la V23)</li>
+        <li>PHP 7.4 ou supérieur, JavaScript activé</li>
+      </ul>
+
+      <h3>Langues</h3>
+      <p>Français, anglais, espagnol, allemand, italien, néerlandais, portugais.</p>
+
+      <h3>Licence</h3>
+      <p>GPL v3 ou supérieure. Code source inclus.</p>

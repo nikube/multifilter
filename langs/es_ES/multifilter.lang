@@ -1,0 +1,16 @@
+# Copyright (C) 2026 Anatole Conseil
+Module185172Name=MultiFilter
+Module185172Desc=Filtros de búsqueda de selección múltiple y "No definido" en las listas
+MultifilterSetup=Configuración de MultiFilter
+MultifilterSetupIntro=En las listas, los filtros de elección única seleccionados se convierten en listas de selección múltiple con una entrada "No definido": busque varias condiciones de pago, varios modos de pago o varios valores de un atributo adicional a la vez, y encuentre los registros sin valor. No se modifica ningún archivo del núcleo.
+MultifilterFeaturePayment=Modos de pago y condiciones de pago (facturas de clientes, pedidos, presupuestos, facturas de proveedores)
+MultifilterFeatureExtrafields=Atributos adicionales de tipo lista (sellist) y selección (select), en todas las listas
+MultifilterFeatureNotDefined=Añadir la entrada "No definido" (registros sin valor)
+MultifilterFeatureDebug=Trazas en la consola del navegador y en el syslog de Dolibarr
+MultifilterNotDefined=No definido
+MultifilterCoveredLists=Listas cubiertas
+MultifilterCoveredFields=Filtros transformados
+MultifilterExtrafieldsLists=Listas del núcleo que incluyen los atributos adicionales (%s contextos conocidos)
+MultifilterExtrafieldsTypes=Atributos adicionales de tipo "Lista desde una tabla" (sellist) y "Selección" (select)
+MultifilterExtraContexts=Contextos de hook adicionales (listas de módulos de terceros que unen los atributos adicionales con el alias "ef"), separados por comas
+MultifilterHint=Los valores seleccionados se conservan en la paginación, la ordenación, las exportaciones y la recuperación de la última búsqueda. El filtro original permanece pero oculto: al desactivar el módulo las listas vuelven a su estado original.
