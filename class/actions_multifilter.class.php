@@ -60,7 +60,8 @@ class ActionsMultifilter
 
 	/**
 	 * Return the fields handled on the current page: name of the core search field =>
-	 * array('sql' => column with alias, 'int' => bool, 'selected' => posted values).
+	 * array('sql' => column with alias, 'type' => 'int'|'sellist'|'select', 'selected' => posted values).
+	 * Empty when javascript is off: the combos can't be swapped, so no hidden server-side filter must apply.
 	 *
 	 * @param string $context Hook context
 	 * @param object $object  Current object of the list page
@@ -75,21 +76,27 @@ class ActionsMultifilter
 			return self::$fieldsCache[$cachekey];
 		}
 
+		global $conf;
+
 		$fields = array();
+		if (empty($conf->use_javascript_ajax)) {
+			self::$fieldsCache[$cachekey] = $fields;
+			return $fields;
+		}
 
 		if (getDolGlobalInt('MULTIFILTER_PAYMENT')) {
 			$entry = multifilterGetContextEntry($context, $object);
 			if ($entry) {
 				foreach ($entry['fields'] as $name => $sqlfield) {
-					$fields[$name] = array('sql' => $sqlfield, 'int' => true, 'selected' => multifilterGetSelection($name));
+					$fields[$name] = array('sql' => $sqlfield, 'type' => 'int', 'selected' => multifilterGetSelection($name));
 				}
 			}
 		}
 
-		if (getDolGlobalInt('MULTIFILTER_EXTRAFIELDS')) {
+		if (getDolGlobalInt('MULTIFILTER_EXTRAFIELDS') && in_array($this->listContext($context), multifilterGetExtrafieldContexts())) {
 			foreach (multifilterGetExtrafieldTargets($object) as $key => $type) {
 				$name = 'search_options_'.$key;
-				$fields[$name] = array('sql' => 'ef.'.$key, 'int' => false, 'selected' => multifilterGetSelection($name));
+				$fields[$name] = array('sql' => 'ef.'.$key, 'type' => $type, 'selected' => multifilterGetSelection($name));
 			}
 		}
 
@@ -145,7 +152,7 @@ class ActionsMultifilter
 			if (!count($def['selected'])) {
 				continue;
 			}
-			$sql .= multifilterSqlCriteria($this->db, $def['sql'], $def['selected'], $def['int']);
+			$sql .= multifilterSqlCriteria($this->db, $def['sql'], $def['selected'], $def['type']);
 		}
 
 		if ($sql !== '') {
@@ -200,11 +207,8 @@ class ActionsMultifilter
 	 */
 	public function printCommonFooter($parameters, &$object, &$action, $hookmanager)
 	{
-		global $conf, $langs;
+		global $langs;
 
-		if (empty($conf->use_javascript_ajax)) {
-			return 0;
-		}
 		$context = isset($parameters['context']) ? $parameters['context'] : '';
 		if (!$this->isListContext($context)) {
 			return 0;

@@ -65,7 +65,6 @@
 
 		if ($.fn.select2) {
 			$new.select2({
-				dir: 'ltr',
 				width: '100%',
 				minimumInputLength: 0,
 				closeOnSelect: false,

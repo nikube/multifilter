@@ -87,6 +87,43 @@ function multifilterGetContextEntry($context, $object)
 }
 
 /**
+ * Hook contexts of the core list pages that join the extrafields table with the alias "ef"
+ * and call the printFieldListWhere hook (Dolibarr 23.0 source, 58 lists). Extrafield filters
+ * are only applied on these contexts: other pages with a "...list" context (product/reassortlot.php,
+ * projet/tasks/time.php, opensurvey/list.php...) have no such join and would fail with
+ * "Unknown column ef.xxx". Third-party lists can be added through the MULTIFILTER_EXTRAFIELDS_CONTEXTS
+ * option (comma separated list of hook contexts).
+ *
+ * @return string[]
+ */
+function multifilterGetExtrafieldContexts()
+{
+	$contexts = array(
+		'agendalist', 'assetlist', 'assetmodellist', 'bankaccountlist', 'banktransactionlist', 'bomlist',
+		'bookcalavailabilitieslist', 'bookcalcalendarlist', 'categoriescategorielist', 'conferenceorboothattendeelist',
+		'contactlist', 'contractlist', 'contractservicelist', 'emailcollectorlist', 'emailsenderprofilelist',
+		'eventorganizationconferenceorboothlist', 'evaluationlist', 'expensereportlist', 'holidaylist', 'interventionlist',
+		'intracommreportlist', 'inventorylist', 'invoicelist', 'invoicereclist', 'joblist', 'knowledgerecordlist',
+		'memberlist', 'mrpmolist', 'orderlist', 'orderlistdetail', 'partnershippartnershiplist', 'paymentlist',
+		'positionlist', 'product_lotlist', 'productattributelist', 'productservicelist', 'projectlist', 'propallist',
+		'receptionlist', 'recruitmentcandidaturelist', 'recruitmentjobpositionlist', 'resourcelist', 'shipmentlist',
+		'skilllist', 'stocklist', 'stockmovementlist', 'stocktransferlist', 'subscriptionlist', 'supplier_proposallist',
+		'supplierinvoicelist', 'supplierorderlist', 'targetlist', 'tasklist', 'thirdpartylist', 'ticketlist', 'userlist',
+		'webhooktriggerhistorylist', 'workstationlist',
+	);
+	$more = getDolGlobalString('MULTIFILTER_EXTRAFIELDS_CONTEXTS');
+	if ($more !== '') {
+		foreach (explode(',', $more) as $ctx) {
+			$ctx = trim($ctx);
+			if ($ctx !== '') {
+				$contexts[] = $ctx;
+			}
+		}
+	}
+	return $contexts;
+}
+
+/**
  * Name of the module parameter carrying the multiselect values of a core search field.
  * search_paymentmode -> search_mf_paymentmode, search_options_foo -> search_mf_options_foo.
  * Keeping the "search_" prefix makes Dolibarr save/restore it with the last search criteria.
@@ -115,11 +152,15 @@ function multifilterGetSelection($name)
 	if (!is_array($values)) {
 		return array();
 	}
+	$allownotdefined = getDolGlobalInt('MULTIFILTER_NOTDEFINED') ? true : false;
 	$out = array();
 	foreach ($values as $value) {
 		$value = trim((string) $value);
 		if ($value === '' || $value === '0' || $value === '-1') {
 			continue;
+		}
+		if ($value === MULTIFILTER_NOTDEFINED_VALUE && !$allownotdefined) {
+			continue; // "Not defined" disabled: ignore it even if it comes from a saved search or a hand-made URL
 		}
 		$out[$value] = $value;
 	}
@@ -155,21 +196,34 @@ function multifilterExtrafieldTypes()
  */
 function multifilterGetExtrafieldTargets($object)
 {
-	global $db;
+	global $db, $conf;
 
 	if (!is_object($object) || empty($object->table_element)) {
 		return array();
 	}
+	// In the ajax select2 mode, sellist search combos are remote-loaded and can't be swapped; select combos are unaffected
+	$ajaxsellist = (!empty($conf->use_javascript_ajax) && getDolGlobalString('MAIN_EXTRAFIELDS_ENABLE_NEW_SELECT2'));
+
 	require_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
 	$extrafields = new ExtraFields($db);
 	$extrafields->fetch_name_optionals_label($object->table_element);
 
 	$out = array();
-	if (!empty($extrafields->attributes[$object->table_element]['type'])) {
-		foreach ($extrafields->attributes[$object->table_element]['type'] as $key => $type) {
-			if (in_array($type, multifilterExtrafieldTypes())) {
-				$out[$key] = $type;
+	$attrs = $extrafields->attributes[$object->table_element];
+	if (!empty($attrs['type'])) {
+		foreach ($attrs['type'] as $key => $type) {
+			if (!in_array($type, multifilterExtrafieldTypes())) {
+				continue;
 			}
+			if ($type == 'sellist' && $ajaxsellist) {
+				continue;
+			}
+			// Same visibility rule as the core list pages: abs(list) == 3 (never on lists) or list == 0 (never visible) means no search filter
+			$list = isset($attrs['list'][$key]) ? (int) dol_eval((string) $attrs['list'][$key], 1, 1, '1') : 0;
+			if ($list == 0 || abs($list) == 3) {
+				continue;
+			}
+			$out[$key] = $type;
 		}
 	}
 	return $out;
@@ -181,11 +235,15 @@ function multifilterGetExtrafieldTargets($object)
  * @param DoliDB   $db          Database handler
  * @param string   $field       SQL column with alias (ex: "f.fk_mode_reglement", "ef.myfield")
  * @param string[] $values      Selected values (may contain MULTIFILTER_NOTDEFINED_VALUE)
- * @param bool     $isint       True if the column is an integer foreign key (values cast to int, "not defined" = NULL or 0)
+ * @param string   $type        'int' = integer foreign key (values cast to int, "not defined" = NULL or 0),
+ *                              'sellist' = varchar key of a dictionary row (exact match),
+ *                              'select' = varchar key of a fixed list; like the core search (natural_search mode 4),
+ *                              the key is also matched inside a comma separated value in case the column holds several keys
  * @return string               " AND (...)" or '' if nothing to filter on
  */
-function multifilterSqlCriteria($db, $field, $values, $isint)
+function multifilterSqlCriteria($db, $field, $values, $type)
 {
+	$isint = ($type == 'int');
 	$notdefined = false;
 	$keys = array();
 	foreach ($values as $value) {
@@ -196,13 +254,22 @@ function multifilterSqlCriteria($db, $field, $values, $isint)
 				$keys[] = (int) $value;
 			}
 		} else {
-			$keys[] = "'".$db->escape($value)."'";
+			$keys[] = $db->escape($value);
 		}
 	}
 
 	$parts = array();
 	if (count($keys)) {
-		$parts[] = $field." IN (".implode(',', $keys).")";
+		if ($type == 'select') {
+			foreach ($keys as $key) {
+				$likekey = $db->escapeforlike($key);
+				$parts[] = "(".$field." = '".$key."' OR ".$field." LIKE '".$likekey.",%' OR ".$field." LIKE '%,".$likekey."' OR ".$field." LIKE '%,".$likekey.",%')";
+			}
+		} elseif ($isint) {
+			$parts[] = $field." IN (".implode(',', $keys).")";
+		} else {
+			$parts[] = $field." IN ('".implode("','", $keys)."')";
+		}
 	}
 	if ($notdefined) {
 		if ($isint) {

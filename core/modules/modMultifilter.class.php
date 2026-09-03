@@ -46,7 +46,7 @@ class modMultifilter extends DolibarrModules
 		$this->descriptionlong = "Search several payment terms, payment modes or extrafield values at once on list pages, and find the records where the value is not set. No core modification.";
 		$this->editor_name = 'Anatole Conseil';
 		$this->editor_url = '';
-		$this->version = '0.1.0';
+		$this->version = '0.1.1';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 		$this->picto = 'fa-filter';
 
@@ -72,6 +72,7 @@ class modMultifilter extends DolibarrModules
 			2 => array('MULTIFILTER_EXTRAFIELDS', 'chaine', '1', 'Multiselect on sellist and select extrafields filters (all lists)', 0, 'current', 0),
 			3 => array('MULTIFILTER_NOTDEFINED', 'chaine', '1', 'Add a "Not defined" entry to search records with no value', 0, 'current', 0),
 			4 => array('MULTIFILTER_DEBUG', 'chaine', '0', 'Log to browser console', 0, 'current', 0),
+			5 => array('MULTIFILTER_EXTRAFIELDS_CONTEXTS', 'chaine', '', 'Extra hook contexts (comma separated) of third-party lists that join extrafields with the alias ef', 0, 'current', 0),
 		);
 
 		if (!isset($conf->multifilter)) {

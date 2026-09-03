@@ -7,7 +7,7 @@ Companion of upstream PR [Dolibarr#39093](https://github.com/Dolibarr/dolibarr/p
 ## What it does
 
 - **Payment modes / payment terms** filters of the customer invoices, customer orders, proposals and supplier invoices lists become multiselects.
-- **Extrafields** of type *sellist* and *select* get a multiselect filter on every list page (67 core lists).
+- **Extrafields** of type *sellist* and *select* get a multiselect filter on the core list pages that join the extrafields table (58 hook contexts known, see `multifilterGetExtrafieldContexts()`; third-party lists can be added from the setup page).
 - A **"Not defined"** entry finds the records with no value set.
 - The selection survives pagination, sorting, exports and the "restore last search" feature.
 
@@ -22,9 +22,11 @@ No core file modified:
 
 ## Limits
 
-- Lists must call the standard `printFieldListWhere` / `printFieldListSearchParam` hooks and join extrafields with the `ef` alias (this is the case for nearly all core lists).
-- Extrafields rendered through the ajax select2 mode (`MAIN_EXTRAFIELDS_ENABLE_NEW_SELECT2`) are not supported.
-- Custom lists of third-party modules are covered only if they use the same hooks and aliases.
+- Extrafield filters are only applied on a whitelist of hook contexts whose SQL joins extrafields with the `ef` alias; a list outside the whitelist keeps its core single-choice filter. Add a third-party list with the `MULTIFILTER_EXTRAFIELDS_CONTEXTS` option (its query must join `..._extrafields as ef` and call the standard `printFieldListWhere` / `printFieldListSearchParam` hooks).
+- Extrafields whose *list* attribute hides them from lists are ignored server-side as well.
+- When javascript is off, no filter is applied at all (no hidden server-side criteria).
+- Disabling the "Not defined" option also rejects the special value coming from a saved search or a hand-made URL.
+- Sellist extrafields rendered through the ajax select2 mode (`MAIN_EXTRAFIELDS_ENABLE_NEW_SELECT2`) are skipped.
 
 ## Setup
 

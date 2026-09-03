@@ -36,6 +36,16 @@ if (!$user->admin) {
 	accessforbidden();
 }
 
+$action = GETPOST('action', 'aZ09');
+if ($action == 'setcontexts') {
+	$contexts = implode(',', array_filter(array_map('trim', explode(',', GETPOST('contexts', 'alphanohtml')))));
+	if (dolibarr_set_const($db, 'MULTIFILTER_EXTRAFIELDS_CONTEXTS', $contexts, 'chaine', 0, '', $conf->entity) > 0) {
+		setEventMessages($langs->trans('SetupSaved'), null);
+	} else {
+		setEventMessages($langs->trans('Error'), null, 'errors');
+	}
+}
+
 $switches = array(
 	'MULTIFILTER_PAYMENT' => 'MultifilterFeaturePayment',
 	'MULTIFILTER_EXTRAFIELDS' => 'MultifilterFeatureExtrafields',
@@ -76,10 +86,24 @@ foreach (multifilterGetRegistry() as $context => $entry) {
 	print '</tr>';
 }
 print '<tr class="oddeven">';
-print '<td>'.$langs->trans('MultifilterAllLists').'</td>';
+print '<td>'.$langs->trans('MultifilterExtrafieldsLists', count(multifilterGetExtrafieldContexts())).'</td>';
 print '<td>'.$langs->trans('MultifilterExtrafieldsTypes').'</td>';
 print '</tr>';
 print '</table>';
+
+print '<br>';
+print '<form method="POST" action="'.dol_escape_htmltag($_SERVER['PHP_SELF']).'">';
+print '<input type="hidden" name="token" value="'.newToken().'">';
+print '<input type="hidden" name="action" value="setcontexts">';
+print '<table class="noborder centpercent">';
+print '<tr class="liste_titre"><td>'.$langs->trans('Parameter').'</td><td class="center">'.$langs->trans('Value').'</td></tr>';
+print '<tr class="oddeven">';
+print '<td>'.$langs->trans('MultifilterExtraContexts').'<br><span class="opacitymedium small">MULTIFILTER_EXTRAFIELDS_CONTEXTS</span></td>';
+print '<td class="center"><input type="text" name="contexts" class="minwidth300" value="'.dol_escape_htmltag(getDolGlobalString('MULTIFILTER_EXTRAFIELDS_CONTEXTS')).'"> ';
+print '<input type="submit" class="button small" value="'.$langs->trans('Save').'"></td>';
+print '</tr>';
+print '</table>';
+print '</form>';
 
 print '<br><span class="opacitymedium">'.$langs->trans('MultifilterHint').'</span>';
 
