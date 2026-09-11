@@ -36,8 +36,8 @@ class modMultifilter extends DolibarrModules
 
 		$this->db = $db;
 
-		// Anatole Conseil range — next free after dolilucca (185171)
-		$this->numero = 185172;
+		// Anatole Conseil range 193940-193949 (wiki List of modules id)
+		$this->numero = 193943;
 		$this->rights_class = 'multifilter';
 		$this->family = 'interface';
 		$this->module_position = '90';
@@ -46,7 +46,7 @@ class modMultifilter extends DolibarrModules
 		$this->descriptionlong = "Search several payment terms, payment modes or extrafield values at once on list pages, and find the records where the value is not set. No core modification.";
 		$this->editor_name = 'Anatole Conseil';
 		$this->editor_url = '';
-		$this->version = '0.1.2';
+		$this->version = '0.1.3';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 		$this->picto = 'fa-filter';
 

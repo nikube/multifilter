@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 0.1.3 (2026-09-11)
+
+- Module id changed from 185172 to 193943 (Anatole Conseil reserved range on the Dolibarr wiki). Disable then re-enable the module after update so the permissions are re-created.
+
 ## 0.1.2 (2026-09-03)
 
 - Translations: Spanish, German, Italian, Dutch, Portuguese.

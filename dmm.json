@@ -6,7 +6,7 @@
   "author": "Anatole Conseil",
   "url": "https://github.com/nikube/multifilter",
   "license": "GPL-3.0-or-later",
-  "dolibarr_module_id": 185172,
+  "dolibarr_module_id": 193943,
   "branch": "master",
   "compatibility": {
     "0.x": {
