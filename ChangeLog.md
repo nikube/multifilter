@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 0.1.4 (2026-10-19)
+
+- FIX: extrafields of type *select* never got the "Not defined" entry. Since Dolibarr 19 their search filter is already a native multiselect (`search_options_<key>[]`), which the script did not recognize; it is now swapped like the single-choice combos.
+
 ## 0.1.3 (2026-09-11)
 
 - Module id changed from 185172 to 193943 (Anatole Conseil reserved range on the Dolibarr wiki). Disable then re-enable the module after update so the permissions are re-created.

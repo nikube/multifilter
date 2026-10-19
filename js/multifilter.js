@@ -21,21 +21,20 @@
 	}
 
 	function swap(name, def) {
-		var $orig = $('select[name="' + name + '"]').first();
+		// Core search combos: single select (sellist) or, since Dolibarr 19, native multiselect "name[]" (select)
+		var $orig = $('select[name="' + name + '"], select[name="' + name + '[]"]').first();
 		if (!$orig.length) {
 			log('field not found', name);
-			return;
-		}
-		if ($orig.prop('multiple')) {
-			log('already multiple', name);
 			return;
 		}
 
 		var selected = (def.selected || []).map(String);
 		var origValue = $orig.val();
+		var origValues = $.isArray(origValue) ? origValue : (origValue === null ? [] : [origValue]);
+		origValues = origValues.map(String).filter(function (v) { return !isIgnoredValue(v); });
 		// A value coming from an old link or a saved search on the core field: import it, then neutralize the core filter
-		if (!selected.length && origValue !== null && !isIgnoredValue(String(origValue))) {
-			selected = [String(origValue)];
+		if (!selected.length && origValues.length) {
+			selected = origValues;
 		}
 
 		var $new = $('<select multiple="multiple"></select>')
