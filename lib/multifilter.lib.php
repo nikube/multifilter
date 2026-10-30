@@ -261,9 +261,10 @@ function multifilterSqlCriteria($db, $field, $values, $type)
 	$parts = array();
 	if (count($keys)) {
 		if ($type == 'select') {
-			foreach ($keys as $key) {
-				$likekey = $db->escapeforlike($key);
-				$parts[] = "(".$field." = '".$key."' OR ".$field." LIKE '".$likekey.",%' OR ".$field." LIKE '%,".$likekey."' OR ".$field." LIKE '%,".$likekey.",%')";
+			// Same order as the core: escapeforlike() on the raw value, then escape()
+			foreach (array_diff($values, array(MULTIFILTER_NOTDEFINED_VALUE)) as $value) {
+				$likekey = $db->escape($db->escapeforlike($value));
+				$parts[] = "(".$field." = '".$db->escape($value)."' OR ".$field." LIKE '".$likekey.",%' OR ".$field." LIKE '%,".$likekey."' OR ".$field." LIKE '%,".$likekey.",%')";
 			}
 		} elseif ($isint) {
 			$parts[] = $field." IN (".implode(',', $keys).")";

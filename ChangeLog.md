@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 0.1.5 (2026-10-30)
+
+- SECURITY: fixed a SQL injection in the search filter on extrafields of type *select*: the values were escaped in the wrong order in the LIKE patterns. Affects versions 0.1.1 to 0.1.4, for any logged-in user with access to a list page. Updating is recommended.
+
 ## 0.1.4 (2026-10-19)
 
 - FIX: extrafields of type *select* never got the "Not defined" entry. Since Dolibarr 19 their search filter is already a native multiselect (`search_options_<key>[]`), which the script did not recognize; it is now swapped like the single-choice combos.
