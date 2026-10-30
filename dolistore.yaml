@@ -5,7 +5,7 @@ slug: multifilter
 module_dir: "."
 
 doli_min: V19
-doli_max: V23
+doli_max: V24
 php_min: "7.4"
 
 price: "19"
